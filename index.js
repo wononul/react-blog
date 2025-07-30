@@ -1,12 +1,8 @@
 const express = require('express');
 const app = express();
-const port = 5000;
+const port = process.env;
 
-/*
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-});
-*/
+const mongoose = require('mongoose'); // mongoose MongoDB ODM
 
 // GET method route
 app.get('/', (req, res) => {
@@ -18,12 +14,6 @@ app.post('/', (req, res) => {
     res.send('POST request to the homepage')
 });
 
-// app.listen(5000);
-
-/*
-app.listen(5000, () => {
-    console.log('Test Successed')
+app.listen(port, () => {
+    console.log(`Server is running on ${port}`) // `(backtick): ES6 표준 문법, 변수 작성 시 사용
 });
-*/
-
-app.listen(port);
