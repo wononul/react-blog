@@ -1,19 +1,17 @@
-const express = require('express');
-const app = express();
-const port = process.env;
+require('dotenv').config(); // .env 파일에서 환경변수 불러오기
+const { PORT, MONGO_URI } = process.env;
+// console.log(process.env);
 
-const mongoose = require('mongoose'); // mongoose MongoDB ODM
+const express = require('express'); // Express 모듈 사용
+const app = express(); // app이라는 새로운 Express 앱 만듦
 
-// GET method route
-app.get('/', (req, res) => {
-    res.send('GET request to the homepage')
-});
+const mongoose = require('mongoose'); // MongoDB ODM 모듈 불러오기
 
-// POST method route
-app.post('/', (req, res) => {
-    res.send('POST request to the homepage')
-});
+mongoose.connect(MONGO_URI)
+        .then(() => console.log('DB Connected!'))
+        .catch(err => console.error(err));
+// console.log("MONGO_URI:", MONGO_URI);
 
-app.listen(port, () => {
-    console.log(`Server is running on ${port}`) // `(backtick): ES6 표준 문법, 변수 작성 시 사용
+app.listen(PORT, () => {
+    console.log(`Server is running on ${PORT}`) // `(backtick): ES6 표준 문법, 변수 작성 시 사용
 });

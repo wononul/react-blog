@@ -24,3 +24,7 @@ const userSchema = mongoose.Schema({ // schema 필드 정의
         default: 0
     }
 })
+
+const User = mongoose.model('User', userSchema);
+
+module.exports = { User }; // User: User (const User로 선언한 모델 객체를 외부로 내보내는 코드이다)
