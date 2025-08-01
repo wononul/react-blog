@@ -18,7 +18,7 @@ mongoose.connect(MONGO_URI)
 app.use(bodyParser.urlencoded( { extended: true })); // application/x-www-form-urlencoded
 app.use(bodyParser.json()); // application/json
 
-// 회원 등록 (수정중)
+// 회원 등록
 app.post('/api/user/register', async (req, res) => {
     try {
         const user = new User(req.body);
