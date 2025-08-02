@@ -17,17 +17,17 @@ mongoose.connect(MONGO_URI)
 app.use(bodyParser.urlencoded( { extended: true })); // application/x-www-form-urlencoded
 app.use(bodyParser.json()); // application/json
 
-// 회원 등록
+/* 회원 등록 */
 app.post('/api/user/register', async (req, res) => {
     try {
         const user = new User(req.body);
         // console.log(user);
         const userData = await user.save();
-        return res.status(200).json({ success: true, user:userData});
-    } catch {
-        return res.status(400).json({ success: false, err});
+        return res.status(200).json({ success: true, user:userData });
+    } catch (err) {
+        return res.status(400).json({ success: false, err });
     }
-})
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`) // `(backtick): ES6 표준 문법, 변수 작성 시 사용
