@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 /* schemayptes 학습: https://mongoosejs.com/docs/schematypes.html */
 const userSchema = mongoose.Schema({ // schema 필드 정의
@@ -22,6 +24,26 @@ const userSchema = mongoose.Schema({ // schema 필드 정의
     role: {
         type: Number,
         default: 0
+    }
+})
+
+/* 비밀번호 해시 처리(pre('save')) */
+userSchema.pre('save', function ( next ) {
+    const user = this;
+
+    if(user.isModified('password')) {
+        bcrypt.genSalt(saltRounds, function(err, salt) {
+            if(err) return next(err);
+
+            bcrypt.hash(user.password, salt, function(err, hash) {
+                if(err) return next(err);
+                user.password = hash; // Store hash in your password DB.
+                next();
+                console.log(user.password);
+            });
+        })
+    } else {
+        next();
     }
 })
 
